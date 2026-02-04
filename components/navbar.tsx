@@ -125,7 +125,7 @@ const CustomNavbar = ({ navItems }: { navItems: any[] }) => {
 							<ProfileMenu user={user} handleLogout={handleLogout} />
 						) : (
 							<>
-								<NavbarButton href="/login" variant="dark">Login</NavbarButton>
+									<NavbarButton href="/sign-in" variant="dark">Sign In</NavbarButton>
 								<NavbarButton variant="primary">Book a call</NavbarButton>
 							</>
 						)
