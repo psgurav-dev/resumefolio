@@ -1,9 +1,20 @@
-
+import Hero from "@/components/hero";
+import HowItWorks from "@/components/how-its-works";
+import CustomNavbar from "@/components/navbar";
 
 export default function Home() {
+
+  const navItems = [
+    { name: "Features", link: "#features" },
+    { name: "Pricing", link: "#pricing" },
+    { name: "About", link: "#about" }
+  ]
+
   return (
     <div className="min-h-screen w-full relative">
-      <h1 className="text-3xl font-bold text-center mt-10">Welcome to Resumefolio</h1>
+      <CustomNavbar navItems={navItems} />
+      <Hero />
+      <HowItWorks />
     </div>
   );
 }
