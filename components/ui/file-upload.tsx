@@ -99,7 +99,7 @@ export const FileUpload = ({
 										)}
 									>
 										<div className="flex justify-between w-full items-center gap-4">
-											<Image src={'/pdf-icon.webp'} width={68} height={24} alt="PDF Icon" />
+											<Image src={'/assets/shared/pdf-icon.webp'} width={68} height={24} alt="PDF Icon" />
 											<motion.p
 												initial={{ opacity: 0 }}
 												animate={{ opacity: 1 }}

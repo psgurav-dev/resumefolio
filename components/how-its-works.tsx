@@ -90,25 +90,27 @@ const HowItWorks = () => {
 
 		}
 	}
-	return <div className="font-manrope py-8 px-2 md:px-0  max-w-6xl mx-auto pb-4 h-[calc(100vh-200px)] flex flex-col items-start justify-evenly">
-		<div>
-			<h4 className="text-4xl font-bold text-black font-bricolage">How It Works</h4>
-			<div className="flex items-center gap-x-2 my-4">
-				<hr className="rotate-90 w-4 text-gray-800" />
-				<span className="font-bricolage text-sm font-light italic text-gray-700">Make it feel effortless.</span>
+	return (
+		<div className="font-manrope py-8 px-2 md:px-0  max-w-6xl mx-auto pb-4 h-[calc(100vh-200px)] flex flex-col items-start">
+			<div>
+				<h4 className="text-4xl font-bold text-black font-bricolage">How It Works</h4>
+				<div className="flex items-center gap-x-2 my-4">
+					<hr className="rotate-90 w-4 text-gray-800" />
+					<span className="font-bricolage text-sm font-light italic text-gray-700">Make it feel effortless.</span>
+				</div>
 			</div>
-		</div>
-		{error && <p className="text-red-500 mb-4">{error}</p>}
-		{data ?
-			<PortfolioReady file={files[0]} portfolioJSON={data} /> :
-			<FileUpload files={files} setFiles={setFiles} handleConvertToPortfolio={handleConvertToPortfolio} isLoading={isLoading} />
-		}
-		<div className="max-w-150">
-			{/* <PdfViewer file={files[0] ?? '/psgurav.pdf'} /> */}
-			{/* <ModernCompact data={testSampleData}/> */}
-		</div>
+			{error && <p className="text-red-500 mb-4">{error}</p>}
+			{data ?
+				<PortfolioReady file={files[0]} portfolioJSON={data} /> :
+				<FileUpload files={files} setFiles={setFiles} handleConvertToPortfolio={handleConvertToPortfolio} isLoading={isLoading} />
+			}
+			<div className="max-w-150">
+				{/* <PdfViewer file={files[0] ?? '/psgurav.pdf'} /> */}
+				{/* <ModernCompact data={testSampleData}/> */}
+			</div>
 
-	</div>;
+		</div>
+	);
 }
 
 
@@ -116,7 +118,6 @@ const PortfolioReady = ({ portfolioJSON, file }: { portfolioJSON: PortfolioData,
 	return (
 		<div>
 			<h4 className="text-center text-gray-100 font-bricolage py-4 text-shadow-4xs font-bold text-4xl">Your Portfolio is ready</h4>
-
 			<div className="bg-black/40 h-125 overflow-y-auto border border-gray-400 rounded-2xl group hide-scrollbar">
 				<ModernTheme data={portfolioJSON} />
 			</div>
