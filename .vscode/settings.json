@@ -1,0 +1,7 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modifications",
+  "editor.fontFamily": "Fira Code Medium, Fira Code, Consolas, 'Courier New', monospace",
+  "editor.wordWrap": "on"
+}
