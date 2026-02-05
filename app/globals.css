@@ -6,6 +6,7 @@
   --font-sans: var(--font-geist-sans);
   --font-bricolage: var(--font-bricolage);
   --font-manrope: var(--font-manrope);
+  --font-inter: var(--font-interTight);
 }
 @theme {
   --animate-move: {

@@ -11,7 +11,7 @@ export default function GoogleLogin() {
 	const loginWithGoogle = () => {
 		account.createOAuth2Session(
 			OAuthProvider.Google,
-			`${process.env.NEXT_PUBLIC_HOST_URL}/`,
+			`${process.env.NEXT_PUBLIC_HOST_URL}/auth/callback`,
 			`${process.env.NEXT_PUBLIC_HOST_URL}/auth/callback`
 		);
 	};
