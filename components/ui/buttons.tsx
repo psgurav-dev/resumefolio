@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { FileCodeCorner, } from "lucide-react";
-import { motion } from "motion/react";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import { ExternalLink, FileCodeCorner, } from "lucide-react";
+import { motion, useAnimation } from "motion/react";
 import { cn } from "@/lib/utils";
 
 type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
@@ -221,3 +221,122 @@ const AceternityLogo = () => {
 		</svg>
 	);
 };
+
+
+export const HoverFillButton = (props: { text: string, handleClick: () => void }) => {
+	const [hover, setHover] = useState(false)
+	return (
+		<motion.div
+			onHoverStart={() => setHover(true)}
+			onHoverEnd={() => setHover(false)}
+			className="bg-black p-1.5 rounded-2xl relative w-48 h-12 cursor-pointer shadow-lg hover:shadow-xl transition-shadow duration-300"
+		>
+			{/* Animated background */}
+			<motion.div
+				layout
+				initial={false}
+				animate={{
+					width: hover ? '100%' : '26%',
+					height: hover ? '100%' : '100%',
+					x: hover ? '0%' : '0%',
+				}}
+				transition={{
+					type: "spring",
+					stiffness: 300,
+					damping: 30
+				}}
+				className="bg-white rounded-[14px] absolute inset-0"
+				style={{
+					boxShadow: hover
+						? 'inset 0 1px 2px rgba(0,0,0,0.1)'
+						: 'inset 0 1px 2px rgba(0,0,0,0.05)'
+				}}
+			/>
+
+			{/* Icon */}
+			<ExternalLink
+				className="absolute left-4 top-1/2 -translate-y-1/2 z-10 transition-colors duration-300"
+				style={{ color: hover ? "#000" : "#ef4444" }}
+				size={18}
+			/>
+
+			{/* Text with smooth color transition */}
+			<motion.span
+				animate={{
+					color: hover ? "#000" : "#fff",
+					x: hover ? 0 : 0
+				}}
+				transition={{
+					duration: 0.3,
+					ease: "easeInOut"
+				}}
+				className="text-sm font-poppins absolute left-16 top-1/2 -translate-y-1/2 z-10"
+			>
+				{props.text}
+			</motion.span>
+		</motion.div>
+	)
+}
+
+// aniamted buttons
+export const BrandButton = ({ Icon, text, handleClick }: {
+	Icon: React.ComponentType<any>,
+	text: string,
+	handleClick: () => void
+}) => {
+	const iconRef = useRef<any>(null);
+	const iconControls = useAnimation();
+	return (
+		<motion.button
+			onClick={handleClick}
+			onMouseEnter={() => {
+				iconRef.current?.startAnimation();
+				iconControls.start({ rotate: 180 });
+			}}
+			onMouseLeave={() => {
+				iconRef.current?.stopAnimation();
+				iconControls.start({ rotate: 0 });
+			}}
+
+			whileHover={{ scale: 1.02 }}
+			whileTap={{ scale: 0.98 }}
+			className="relative bg-gradient-to-br from-zinc-800 via-zinc-900 to-black h-11 font-manrope text-white px-6 py-2.5 text-sm rounded-xl font-bold transition-all duration-300 text-center cursor-pointer flex items-center gap-x-3 overflow-hidden group shadow-lg hover:shadow-xl hover:shadow-zinc-900/50 group:"
+		>
+			{/* Animated gradient overlay */}
+			<motion.div
+				className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+				animate={{
+					x: ['-100%', '100%'],
+				}}
+				transition={{
+					duration: 3,
+					repeat: Infinity,
+					ease: "linear",
+					repeatDelay: 1
+				}}
+			/>
+
+			{/* Glow effect on hover */}
+			<motion.div
+				className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"
+			/>
+
+			{/* Icon with rotation animation */}
+			<motion.div
+				className="relative z-10 group-hover:rotate-180 transition-all ease-in-out duration-700"
+			>
+				<Icon ref={iconRef} />
+			</motion.div>
+
+			{/* Text */}
+			<span className="relative z-10 bg-gradient-to-r from-white to-zinc-300 bg-clip-text text-transparent group-hover:from-white group-hover:to-white transition-all duration-300">
+				{text}
+			</span>
+
+			{/* Border highlight */}
+			<motion.div
+				className="absolute inset-0 rounded-xl border border-white/10 group-hover:border-white/30 transition-colors duration-300"
+			/>
+		</motion.button>
+	)
+}

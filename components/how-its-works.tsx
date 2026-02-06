@@ -5,7 +5,7 @@ import { parseResume } from "@/services/gemini-ai";
 import { PortfolioData } from "@/types/portfolio";
 
 import ModernTheme from "@/templates/modern-1";
-import { HoverBorderGradient } from "@/components/ui/buttons";
+import { HoverBorderGradient, HoverFillButton } from "@/components/ui/buttons";
 import { SquareArrowOutUpRight } from "lucide-react";
 
 
@@ -104,10 +104,7 @@ const HowItWorks = () => {
 				<PortfolioReady file={files[0]} portfolioJSON={data} /> :
 				<FileUpload files={files} setFiles={setFiles} handleConvertToPortfolio={handleConvertToPortfolio} isLoading={isLoading} />
 			}
-			<div className="max-w-150">
-				{/* <PdfViewer file={files[0] ?? '/psgurav.pdf'} /> */}
-				{/* <ModernCompact data={testSampleData}/> */}
-			</div>
+
 
 		</div>
 	);
@@ -122,14 +119,7 @@ const PortfolioReady = ({ portfolioJSON, file }: { portfolioJSON: PortfolioData,
 				<ModernTheme data={portfolioJSON} />
 			</div>
 			<div className="my-4 mx-auto  flex items-center justify-center">
-				<HoverBorderGradient
-					containerClassName="rounded-full"
-					as="button"
-					className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 cursor-pointer"
-				>
-					<SquareArrowOutUpRight />
-					<span className="font-manrope">Get Your Link</span>
-				</HoverBorderGradient>
+				<HoverFillButton text={"Get your link"} handleClick={() => { }} />
 			</div>
 		</div>
 	)

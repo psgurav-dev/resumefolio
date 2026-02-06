@@ -4,8 +4,9 @@ import { motion } from "motion/react";
 import { Upload } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
-import { EncryptButton } from "./buttons";
+import { BrandButton, EncryptButton } from "./buttons";
 import { Skeleton } from "./ai-loading-skelton";
+import BrandAiStudioIcon from "./icons/brand-aistudio-icon";
 
 const mainVariant = {
 	initial: {
@@ -34,12 +35,14 @@ export const FileUpload = ({
 	setFiles,
 	handleConvertToPortfolio,
 	isLoading,
+	isGrid = true
 }: {
 	onChange?: (files: File[]) => void;
 	files: File[];
 	setFiles: (files: File[]) => void;
 	handleConvertToPortfolio: () => void;
 	isLoading?: boolean;
+		isGrid?: boolean;
 }) => {
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -76,9 +79,10 @@ export const FileUpload = ({
 					onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
 					className="hidden"
 				/>
-				<div className="absolute inset-0 mask-[radial-gradient(ellipse_at_center,white,transparent)]">
-					<GridPattern />
-				</div>
+				{isGrid &&
+					<div className="absolute inset-0 mask-[radial-gradient(ellipse_at_center,white,transparent)]">
+						<GridPattern />
+					</div>}
 				{isLoading ? <Skeleton /> : (
 					<div className="flex flex-col items-center justify-center gap-4">
 						<p className="relative z-20 font-manrope font-bold text-neutral-700 dark:text-neutral-300 text-base">
@@ -149,7 +153,8 @@ export const FileUpload = ({
 								// 	rounded-2xl border-2 border-dashed border-black bg-white px-6 py-3 font-semibold uppercase text-black transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:rounded-md hover:shadow-[4px_4px_0px_black] active:translate-x-[0px] active:translate-y-[0px] active:rounded-2xl active:shadow-none"
 								// >Convert to Portfolio</motion.div>
 								<div className="mt-4 mx-auto w-full flex items-center justify-center">
-									<EncryptButton handleConvertToPortfolio={handleConvertToPortfolio} isLoading={isLoading} />
+									{/* <EncryptButton handleConvertToPortfolio={handleConvertToPortfolio} isLoading={isLoading} /> */}
+									<BrandButton text={"Convert To Portfolio"} handleClick={() => { }} Icon={BrandAiStudioIcon} />
 								</div>
 							)}
 

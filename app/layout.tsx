@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque, Manrope, Inter_Tight } from "next/font/google";
+import { Inter, Bricolage_Grotesque, Manrope, Inter_Tight, Poppins } from "next/font/google";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({
@@ -25,6 +25,12 @@ const interTight = Inter_Tight({
   subsets: ["latin"],
   weight: ["400", "700"],
 })
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+})
 export const metadata: Metadata = {
   title: "Resumefolio",
   description: "Convert your resume into a beautiful portfolio website effortlessly.",
@@ -37,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sans.variable} ${bricolage.variable} ${manrope.variable} antialiased bg-white`}>
+      <body className={`${sans.variable} ${bricolage.variable} ${manrope.variable} ${poppins.variable} ${interTight.variable} antialiased bg-white`}>
         {children}
       </body>
     </html>

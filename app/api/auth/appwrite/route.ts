@@ -1,9 +1,10 @@
 export const runtime = 'nodejs';
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { connect } from '@/config/mongose';
 import User from '@/models/users';
 import { getServerAccount } from '@/config/appwrite-server';
+
 
 export async function POST(req: Request) {
   try {
