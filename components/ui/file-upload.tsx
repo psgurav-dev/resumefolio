@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { Upload } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
-import { BrandButton, EncryptButton } from "./buttons";
+import { BrandButton } from "./buttons";
 import { Skeleton } from "./ai-loading-skelton";
 import BrandAiStudioIcon from "./icons/brand-aistudio-icon";
 
@@ -40,7 +40,7 @@ export const FileUpload = ({
 	onChange?: (files: File[]) => void;
 	files: File[];
 	setFiles: (files: File[]) => void;
-	handleConvertToPortfolio: () => void;
+		handleConvertToPortfolio: (e: any) => void;
 	isLoading?: boolean;
 		isGrid?: boolean;
 }) => {
@@ -154,7 +154,7 @@ export const FileUpload = ({
 								// >Convert to Portfolio</motion.div>
 								<div className="mt-4 mx-auto w-full flex items-center justify-center">
 									{/* <EncryptButton handleConvertToPortfolio={handleConvertToPortfolio} isLoading={isLoading} /> */}
-									<BrandButton text={"Convert To Portfolio"} handleClick={() => { }} Icon={BrandAiStudioIcon} />
+									<BrandButton text={"Convert To Portfolio"} handleClick={handleConvertToPortfolio} Icon={BrandAiStudioIcon} />
 								</div>
 							)}
 

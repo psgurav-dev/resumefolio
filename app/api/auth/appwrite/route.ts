@@ -5,7 +5,6 @@ import { connect } from '@/config/mongose';
 import User from '@/models/users';
 import { getServerAccount } from '@/config/appwrite-server';
 
-
 export async function POST(req: Request) {
   try {
     const { jwt } = await req.json();
@@ -13,7 +12,6 @@ export async function POST(req: Request) {
 
     await connect();
 
-    // ✅ user-scoped Appwrite client
     const account = getServerAccount(jwt);
     const appwriteUser = await account.get();
 

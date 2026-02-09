@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <!-- Shadow for the white square -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer yellow/orange rounded square -->
+  <rect x="8" y="8" width="112" height="112" rx="24" ry="24" fill="#F5A623"/>
+  
+  <!-- Inner white rounded square with shadow -->
+  <rect x="28" y="28" width="72" height="72" rx="12" ry="12" fill="#FFFFFF" filter="url(#shadow)"/>
+  
+  <!-- Horizontal lines inside white square -->
+  <rect x="40" y="46" width="28" height="4" rx="2" fill="#D1D1D1"/>
+  <rect x="40" y="58" width="48" height="4" rx="2" fill="#D1D1D1"/>
+  <rect x="40" y="70" width="48" height="4" rx="2" fill="#D1D1D1"/>
+  <rect x="40" y="82" width="36" height="4" rx="2" fill="#D1D1D1"/>
+</svg>

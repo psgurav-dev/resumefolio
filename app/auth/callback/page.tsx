@@ -2,10 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux";
+import { setCurrentUser } from "@/redux/slices/usersSlice";
 import { account } from "@/config/appwrite";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const ran = useRef(false);
 
   useEffect(() => {
@@ -27,6 +30,19 @@ export default function AuthCallbackPage() {
 
         if (!res.ok) throw new Error("User sync failed");
 
+        const { user } = await res.json();
+
+        // ✅ Store user in Redux
+        dispatch(setCurrentUser({
+          _id: user._id,
+          appwriteUserId: user.appwriteUserId,
+          email: user.email,
+          name: user.name,
+          provider: user.provider as 'google' | 'github' | 'email',
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        }));
+
         router.replace("/dashboard");
       } catch (err) {
         console.error(err);
@@ -35,7 +51,7 @@ export default function AuthCallbackPage() {
     }
 
     handleAuth();
-  }, [router]);
+  }, [router, dispatch]);
 
   return (
     <div className="h-screen flex items-center justify-center">

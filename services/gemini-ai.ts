@@ -6,8 +6,6 @@ import {
 } from '@/data/prompts/resume-parse';
 import { GEMINI_KEY } from '@/config/const';
 
-console.log('gemini-key', GEMINI_KEY);
-
 const ai = new GoogleGenAI({ apiKey: GEMINI_KEY || '' });
 
 const portfolioSchema = {

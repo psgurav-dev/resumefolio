@@ -22,7 +22,9 @@ export const extractResumeJSON = async (
     }
     const parsedData = await parseResume(input);
     console.log('Parsed Portfolio Data:', parsedData);
+    return parsedData;
   } catch (err: any) {
     console.error(err);
+    throw err;
   }
 };

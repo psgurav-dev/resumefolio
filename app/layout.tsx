@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque, Manrope, Inter_Tight, Poppins } from "next/font/google";
 import "./globals.css";
+import { ReduxProvider } from "@/redux/provider";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -44,7 +45,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sans.variable} ${bricolage.variable} ${manrope.variable} ${poppins.variable} ${interTight.variable} antialiased bg-white`}>
-        {children}
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );

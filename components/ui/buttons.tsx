@@ -87,7 +87,7 @@ export const EncryptButton = ({ handleConvertToPortfolio, isLoading }: { handleC
 					duration: 1,
 					ease: "linear",
 				}}
-				className="duration-300 absolute inset-0 z-0 scale-125 bg-gradient-to-t from-[#1C465D] from-40% via-primary to-indigo-400/0 to-60% opacity-0 transition-opacity group-hover:opacity-100"
+				className="duration-300 absolute inset-0 z-0 scale-125 bg-linear-to-t from-[#1C465D] from-40% via-primary to-indigo-400/0 to-60% opacity-0 transition-opacity group-hover:opacity-100"
 			/>
 		</motion.button>
 	);
@@ -282,7 +282,7 @@ export const HoverFillButton = (props: { text: string, handleClick: () => void }
 export const BrandButton = ({ Icon, text, handleClick }: {
 	Icon: React.ComponentType<any>,
 	text: string,
-	handleClick: () => void
+	handleClick: (e: any) => void
 }) => {
 	const iconRef = useRef<any>(null);
 	const iconControls = useAnimation();
@@ -300,11 +300,11 @@ export const BrandButton = ({ Icon, text, handleClick }: {
 
 			whileHover={{ scale: 1.02 }}
 			whileTap={{ scale: 0.98 }}
-			className="relative bg-gradient-to-br from-zinc-800 via-zinc-900 to-black h-11 font-manrope text-white px-6 py-2.5 text-sm rounded-xl font-bold transition-all duration-300 text-center cursor-pointer flex items-center gap-x-3 overflow-hidden group shadow-lg hover:shadow-xl hover:shadow-zinc-900/50 group:"
+			className="relative bg-linear-to-br from-zinc-800 via-zinc-900 to-black h-11 font-manrope text-white px-6 py-2.5 text-sm rounded-xl font-bold transition-all duration-300 text-center cursor-pointer flex items-center gap-x-3 overflow-hidden group shadow-lg hover:shadow-xl hover:shadow-zinc-900/50 group:"
 		>
 			{/* Animated gradient overlay */}
 			<motion.div
-				className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+				className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent"
 				animate={{
 					x: ['-100%', '100%'],
 				}}
@@ -318,7 +318,7 @@ export const BrandButton = ({ Icon, text, handleClick }: {
 
 			{/* Glow effect on hover */}
 			<motion.div
-				className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"
+				className="absolute inset-0 bg-linear-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"
 			/>
 
 			{/* Icon with rotation animation */}
@@ -329,7 +329,7 @@ export const BrandButton = ({ Icon, text, handleClick }: {
 			</motion.div>
 
 			{/* Text */}
-			<span className="relative z-10 bg-gradient-to-r from-white to-zinc-300 bg-clip-text text-transparent group-hover:from-white group-hover:to-white transition-all duration-300">
+			<span className="relative z-10 bg-linear-to-r from-white to-zinc-300 bg-clip-text text-transparent group-hover:from-white group-hover:to-white transition-all duration-300">
 				{text}
 			</span>
 
@@ -340,3 +340,185 @@ export const BrandButton = ({ Icon, text, handleClick }: {
 		</motion.button>
 	)
 }
+
+
+interface SidebarButtonProps {
+	text: string;
+	icon: React.ComponentType<any>;
+	isSelected: boolean;
+	onClick: () => void;
+	badge?: number | string;
+}
+
+export const SidebarButton = ({
+	text,
+	icon: Icon,
+	isSelected,
+	onClick,
+	badge
+}: SidebarButtonProps) => {
+	const iconRef = useRef<any>(null);
+	const iconControls = useAnimation();
+
+	const handleClick = () => {
+		onClick();
+	};
+
+	return (
+		<motion.button
+			onClick={handleClick}
+			onMouseEnter={() => {
+				iconRef.current?.startAnimation?.();
+				iconControls.start({ scale: 1.05 });
+			}}
+			onMouseLeave={() => {
+				iconRef.current?.stopAnimation?.();
+				iconControls.start({ scale: 1 });
+			}}
+			whileHover={{ x: 4 }}
+			whileTap={{ scale: 0.97 }}
+			className={`
+				relative w-full h-11 px-3.5 py-2.5 
+				rounded-[11px] font-manrope text-sm font-medium
+				transition-all duration-300 text-left cursor-pointer 
+				flex items-center gap-3 overflow-hidden group
+				${isSelected
+					? 'bg-gradient-to-br from-gray-900/95 via-gray-950/95 to-black/95 backdrop-blur-xl'
+					: 'bg-white/40 backdrop-blur-md hover:bg-white/60'
+				}
+			`}
+			animate={{
+				boxShadow: isSelected
+					? '0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+					: '0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+			}}
+			transition={{ duration: 0.3 }}
+		>
+			{/* Animated shimmer overlay - only on selected */}
+			{isSelected && (
+				<motion.div
+					className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+					animate={{
+						x: ['-100%', '100%'],
+					}}
+					transition={{
+						duration: 3,
+						repeat: Infinity,
+						ease: "linear",
+						repeatDelay: 2
+					}}
+				/>
+			)}
+
+			{/* Glow effect on hover */}
+			<motion.div
+				className={`
+					absolute inset-0 rounded-[11px] opacity-0 
+					group-hover:opacity-100 transition-opacity duration-500
+					${isSelected
+						? 'bg-gradient-to-br from-white/10 via-white/5 to-transparent'
+						: 'bg-gradient-to-br from-gray-100/80 via-gray-50/40 to-transparent'
+					}
+				`}
+			/>
+
+			{/* Active indicator bar */}
+			<motion.div
+				className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 rounded-r-full bg-gradient-to-b from-gray-400 via-gray-300 to-gray-500 shadow-lg shadow-gray-400/50"
+				initial={{ height: 0, opacity: 0 }}
+				animate={{
+					height: isSelected ? '65%' : 0,
+					opacity: isSelected ? 1 : 0,
+				}}
+				transition={{ duration: 0.3, ease: "easeOut" }}
+			/>
+
+			{/* Icon with animation */}
+			<motion.div
+				className="relative z-10 flex-shrink-0"
+				animate={iconControls}
+				transition={{ duration: 0.4, ease: "easeInOut" }}
+			>
+				<Icon
+					ref={iconRef}
+					className={`
+						w-[18px] h-[18px] transition-all duration-300
+						${isSelected
+							? 'text-white drop-shadow-[0_2px_4px_rgba(255,255,255,0.3)]'
+							: 'text-gray-700 group-hover:text-gray-900'
+						}
+					`}
+					strokeWidth={isSelected ? 2.5 : 2}
+				/>
+			</motion.div>
+
+			{/* Text */}
+			<span
+				className={`
+					relative z-10 flex-1 transition-all duration-300
+					${isSelected
+						? 'text-white  drop-shadow-[0_2px_4px_rgba(255,255,255,0.2)]'
+						: 'text-gray-800 group-hover:text-gray-950 font-medium'
+					}
+				`}
+			>
+				{text}
+			</span>
+
+			{/* Badge */}
+			{badge !== undefined && (
+				<motion.div
+					className={`
+						relative z-10 min-w-[18px] h-[18px] px-1.5 
+						rounded-[6px] flex items-center justify-center 
+						text-[10px] font-bold transition-all duration-300
+						${isSelected
+							? 'bg-white/20 text-white backdrop-blur-sm border border-white/30 shadow-lg shadow-white/20'
+							: 'bg-gray-900/10 text-gray-700 backdrop-blur-sm border border-gray-200/50 group-hover:bg-gray-900/20 group-hover:text-gray-900'
+						}
+					`}
+					initial={{ scale: 0, rotate: -180 }}
+					animate={{ scale: 1, rotate: 0 }}
+					transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+				>
+					{badge}
+				</motion.div>
+			)}
+
+			{/* Border highlight with glassmorphic effect */}
+			<div
+				className={`
+					absolute inset-0 rounded-[11px] 
+					transition-all duration-300
+					${isSelected
+						? 'border border-white/20 group-hover:border-white/40'
+						: 'border border-gray-200/50 group-hover:border-gray-300/80'
+					}
+				`}
+			/>
+
+			{/* Inner glow for glassmorphic depth */}
+			{isSelected && (
+				<div className="absolute inset-0 rounded-[11px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+			)}
+
+			{/* Ripple effect on click */}
+			<motion.div
+				className="absolute inset-0 rounded-[11px]"
+				initial={{ scale: 0, opacity: 0.6 }}
+				whileTap={{
+					scale: 2.5,
+					opacity: 0,
+					transition: { duration: 0.5, ease: "easeOut" }
+				}}
+				style={{
+					background: isSelected
+						? 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%)'
+						: 'radial-gradient(circle, rgba(107,114,128,0.3) 0%, transparent 70%)'
+				}}
+			/>
+		</motion.button>
+	);
+};
+
+
