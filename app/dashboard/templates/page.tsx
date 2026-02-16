@@ -1,9 +1,11 @@
-import React from 'react'
+import TemplateLists from "@/components/dashboard/templates/templates-list"
 
-function page() {
+const TemplatesPage = () => {
 	return (
-		<div>page</div>
+		<div className="h-screen overflow-auto">
+			<TemplateLists />
+		</div>
 	)
 }
 
-export default page
+export default TemplatesPage

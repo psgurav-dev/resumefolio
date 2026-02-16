@@ -13,6 +13,7 @@ const Sidebar = () => {
 	const routes = [
 		{ name: "Resumes", icon: FileDescriptionIcon, link: "resumes", badge: 5 },
 		{ name: "Templates", icon: FileDescriptionIcon, link: "templates", badge: "New" },
+		{ name: "Link Resume", icon: FileDescriptionIcon, link: "link-resume", badge: "Quick" },
 		{ name: "Profile", icon: User, link: "profile" }
 	];
 

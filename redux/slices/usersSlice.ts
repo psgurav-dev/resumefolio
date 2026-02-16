@@ -8,11 +8,13 @@ export interface User {
   provider: 'google' | 'github' | 'email';
   createdAt?: string;
   updatedAt?: string;
+  jwt?: string;
 }
 
 export interface UsersState {
   currentUser: User | null;
   users: User[];
+  jwt: string | null;
   loading: boolean;
   error: string | null;
 }
@@ -20,6 +22,7 @@ export interface UsersState {
 const initialState: UsersState = {
   currentUser: null,
   users: [],
+  jwt: null,
   loading: false,
   error: null,
 };
@@ -30,9 +33,11 @@ const usersSlice = createSlice({
   reducers: {
     setCurrentUser: (state, action: PayloadAction<User>) => {
       state.currentUser = action.payload;
+      state.jwt = action.payload.jwt || null;
       state.error = null;
     },
     setUsers: (state, action: PayloadAction<User[]>) => {
+      console.log('Setting users in state:', action.payload);
       state.users = action.payload;
       state.error = null;
     },
@@ -41,7 +46,9 @@ const usersSlice = createSlice({
       state.error = null;
     },
     updateUser: (state, action: PayloadAction<User>) => {
-      const index = state.users.findIndex(user => user._id === action.payload._id);
+      const index = state.users.findIndex(
+        (user) => user._id === action.payload._id,
+      );
       if (index !== -1) {
         state.users[index] = action.payload;
       }
@@ -51,7 +58,7 @@ const usersSlice = createSlice({
       state.error = null;
     },
     deleteUser: (state, action: PayloadAction<string>) => {
-      state.users = state.users.filter(user => user._id !== action.payload);
+      state.users = state.users.filter((user) => user._id !== action.payload);
       if (state.currentUser?._id === action.payload) {
         state.currentUser = null;
       }
@@ -59,6 +66,7 @@ const usersSlice = createSlice({
     },
     clearCurrentUser: (state) => {
       state.currentUser = null;
+      state.jwt = null;
       state.error = null;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -67,6 +75,9 @@ const usersSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
       state.loading = false;
+    },
+    setJWT: (state, action: PayloadAction<string | null>) => {
+      state.jwt = action.payload;
     },
   },
 });
@@ -80,6 +91,7 @@ export const {
   clearCurrentUser,
   setLoading,
   setError,
+  setJWT,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

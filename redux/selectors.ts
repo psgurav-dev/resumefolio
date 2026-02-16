@@ -49,10 +49,15 @@ export const selectUsersError = createSelector(
   (users) => users.error
 );
 
+export const selectJWT = createSelector(
+  [selectUsersState],
+  (users) => users.jwt,
+);
+
 // Derived selectors
 export const selectCurrentUserId = createSelector(
   [selectCurrentUser],
-  (user) => user?._id || ''
+  (user) => user?.appwriteUserId || '',
 );
 
 export const selectIsAuthenticated = createSelector(

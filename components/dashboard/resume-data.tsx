@@ -19,7 +19,7 @@ import {
 } from "@/redux";
 import { selectPreviewData, selectResumesData, selectCurrentUserId } from "@/redux/selectors";
 
-const UploadNewDocument = ({ currentUserId }: { currentUserId: string }) => {
+export const UploadNewDocument = ({ currentUserId }: { currentUserId: string }) => {
 	const [files, setFiles] = useState<File[]>([])
 	const [isPending, setTransition] = useTransition()
 	const [isProcessing, setIsProcessing] = useState(false)
@@ -85,7 +85,7 @@ const UploadNewDocument = ({ currentUserId }: { currentUserId: string }) => {
 	if (previewData) {
 		return (
 			<ResumePreview
-				data={testData}
+				data={previewData}
 				onSave={handleSaveResume}
 				isSaving={isPending}
 				onCancel={() => dispatch(setCurrentResume(null))}
@@ -94,16 +94,15 @@ const UploadNewDocument = ({ currentUserId }: { currentUserId: string }) => {
 	}
 
 	return (
-		<div className="w-full">
-			<div className="bg-white border-dashed border w-full rounded">
-				<FileUpload
-					files={files}
-					setFiles={setFiles}
-					handleConvertToPortfolio={handleFileUpload}
-					isLoading={isPending || isProcessing}
-					isGrid={false}
-				/>
-			</div>
+
+		<div className="bg-white border-dashed border rounded">
+			<FileUpload
+				files={files}
+				setFiles={setFiles}
+				handleConvertToPortfolio={handleFileUpload}
+				isLoading={isPending || isProcessing}
+				isGrid={false}
+			/>
 		</div>
 	)
 }
@@ -113,22 +112,22 @@ const UploadNewDocument = ({ currentUserId }: { currentUserId: string }) => {
 const ResumeData = () => {
 	const dispatch = useAppDispatch();
 	const { resumes, loading } = useAppSelector(selectResumesData);
-	// Get current user ID from Redux
+
 	const currentUserId = useAppSelector(selectCurrentUserId);
-	console.log('Current User ID:', currentUserId, resumes);
+	// console.log('Current User ID in ResumeData component:', currentUserId);
+	console.log('Resumes data from Redux:', currentUserId);
+	console.log("resumes", resumes, loading)
 	useEffect(() => {
-		if (currentUserId) {
+		if (currentUserId && !resumes.length) {
+			console.log('Fetching resumes for user:');
 			dispatch(fetchResumes(currentUserId));
 		}
 	}, [currentUserId, dispatch]);
 
+	if (loading) return <div>Loading...</div>
 	return (
 		<div className="w-full h-screen overflow-y-auto">
-			{resumes && resumes.length > 0 ? (
-				<ResumeDataVariantsList data={resumes} />
-			) : (
-				<UploadNewDocument currentUserId={currentUserId} />
-			)}
+			<ResumeDataVariantsList data={resumes} currentUserId={currentUserId} />
 		</div>
 	)
 }

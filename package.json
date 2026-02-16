@@ -6,13 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "migrate": "tsx migrations/migrate.ts up",
+    "migrate:down": "tsx migrations/migrate.ts down",
+    "migrate:status": "tsx migrations/migrate.ts status"
   },
   "dependencies": {
     "@google/genai": "^1.39.0",
     "@reduxjs/toolkit": "^2.11.2",
     "appwrite": "^22.0.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.6.1",
     "lucide-react": "^0.563.0",
     "mongoose": "^9.1.6",
     "motion": "^12.31.0",
@@ -33,6 +37,7 @@
     "eslint-config-next": "16.1.6",
     "prettier": "3.8.1",
     "tailwindcss": "^4",
+    "tsx": "^4.7.0",
     "typescript": "^5"
   }
 }

@@ -279,10 +279,11 @@ export const HoverFillButton = (props: { text: string, handleClick: () => void }
 }
 
 // aniamted buttons
-export const BrandButton = ({ Icon, text, handleClick }: {
+export const BrandButton = ({ Icon, text, handleClick, className }: {
 	Icon: React.ComponentType<any>,
 	text: string,
 	handleClick: (e: any) => void
+	className?: string
 }) => {
 	const iconRef = useRef<any>(null);
 	const iconControls = useAnimation();
@@ -300,7 +301,7 @@ export const BrandButton = ({ Icon, text, handleClick }: {
 
 			whileHover={{ scale: 1.02 }}
 			whileTap={{ scale: 0.98 }}
-			className="relative bg-linear-to-br from-zinc-800 via-zinc-900 to-black h-11 font-manrope text-white px-6 py-2.5 text-sm rounded-xl font-bold transition-all duration-300 text-center cursor-pointer flex items-center gap-x-3 overflow-hidden group shadow-lg hover:shadow-xl hover:shadow-zinc-900/50 group:"
+			className={cn("relative bg-linear-to-br from-zinc-800 via-zinc-900 to-black h-11 font-manrope text-white px-6 py-2.5 text-sm rounded-xl font-bold transition-all duration-300 text-center cursor-pointer flex items-center gap-x-3 overflow-hidden group shadow-lg hover:shadow-xl hover:shadow-zinc-900/50", className)}
 		>
 			{/* Animated gradient overlay */}
 			<motion.div

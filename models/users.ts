@@ -8,7 +8,12 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       index: true,
     },
-
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
     email: {
       type: String,
       required: true,
@@ -24,6 +29,13 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ['google', 'github', 'email'],
       default: 'google',
+    },
+
+    // feild name for selected-resume
+    selectedResume: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'resumes',
+      null: true,
     },
   },
   { timestamps: true },

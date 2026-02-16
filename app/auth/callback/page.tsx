@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux";
 import { setCurrentUser } from "@/redux/slices/usersSlice";
 import { account } from "@/config/appwrite";
+import { setAuthCookies } from "@/lib/cookies";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -18,22 +19,22 @@ export default function AuthCallbackPage() {
     async function handleAuth() {
       try {
         // ✅ create JWT from Appwrite session
-        const jwt = await account.createJWT();
+        const jwtResponse = await account.createJWT();
+        const jwtToken = jwtResponse.jwt;
 
         const res = await fetch("/api/auth/appwrite", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ jwt: jwt.jwt })
+          body: JSON.stringify({ jwt: jwtToken })
         });
 
         if (!res.ok) throw new Error("User sync failed");
 
         const { user } = await res.json();
 
-        // ✅ Store user in Redux
-        dispatch(setCurrentUser({
+        const userData = {
           _id: user._id,
           appwriteUserId: user.appwriteUserId,
           email: user.email,
@@ -41,7 +42,14 @@ export default function AuthCallbackPage() {
           provider: user.provider as 'google' | 'github' | 'email',
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
-        }));
+          jwt: jwtToken,
+        };
+
+        // ✅ Store user and JWT in Redux
+        dispatch(setCurrentUser(userData));
+
+        // ✅ Store JWT and user info in cookies
+        setAuthCookies(jwtToken, userData);
 
         router.replace("/dashboard");
       } catch (err) {
