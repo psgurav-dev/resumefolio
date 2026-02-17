@@ -23,6 +23,7 @@ const TemplatePreview = ({ id }: { id: string }) => {
 				const response = await fetch(`/api/resume-data/id`, {
 					method: 'POST',
 					headers: {
+						authorization: `Bearer ${localStorage.getItem('token')}`,
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({ userId: id }),

@@ -1,6 +1,32 @@
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { connect } from '@/config/mongose';
 import User from '@/models/users';
+import { getServerAccount } from '@/config/appwrite-server';
+
+export async function GET(req: NextRequest) {
+  try {
+    await connect();
+    const authHeader = req.headers.get('authorization');
+    if (!authHeader) {
+      return NextResponse.json({
+        error: 'Unauthorized',
+      });
+    }
+    const token = authHeader.replace('Bearer ', '');
+    const account = getServerAccount(token);
+    const appwriteUser = await account.get();
+
+    const user = await User.findOne({
+      appwriteUserId: appwriteUser.$id,
+    });
+    if (!user) {
+      return NextResponse.json({ user: null });
+    }
+    return NextResponse.json({ user });
+  } catch (error) {}
+}
 
 export async function PUT(req: NextRequest) {
   try {
@@ -8,10 +34,6 @@ export async function PUT(req: NextRequest) {
 
     const body = await req.json();
     const { selectedResume, userId } = body;
-    console.log('API received body:', body);
-    console.log('API received userId:', userId);
-    console.log('API received userId type:', typeof userId);
-    console.log('API received userId length:', userId?.length);
 
     if (!selectedResume) {
       return NextResponse.json(

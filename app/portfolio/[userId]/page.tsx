@@ -1,7 +1,9 @@
 import TemplatePreview from "@/components/dashboard/template-preview";
+import { account } from "@/config/appwrite-server";
 
 const UserPortfolioPage = async ({ params }: { params: { userId: string } }) => {
-	const { userId } = await params;
+
+	const token = await account.createJWT();
 
 	return <TemplatePreview id={userId} />;
 }

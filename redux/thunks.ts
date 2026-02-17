@@ -3,25 +3,10 @@ import { account } from '@/config/appwrite';
 import { getJWTCookie } from '@/lib/cookies';
 import type { Resume } from './slices/resumesSlice';
 import type { User } from './slices/usersSlice';
-import type { RootState } from './store';
 
 // Helper function to get JWT token - checks Redux store first, then creates new, falls back to cookies
 const getAuthToken = async (getState: () => any): Promise<string> => {
   try {
-    // Try to get JWT from Redux store first
-    const state = getState();
-    const reduxJWT = state.users.jwt;
-
-    if (reduxJWT) {
-      return reduxJWT;
-    }
-
-    // Try to get from cookies
-    const cookieJWT = getJWTCookie();
-    if (cookieJWT) {
-      return cookieJWT;
-    }
-
     // Create new JWT if not available
     const jwt = await account.createJWT();
     return jwt.jwt;
@@ -38,7 +23,7 @@ export const fetchResumes = createAsyncThunk(
       const token = await getAuthToken(getState);
       const response = await fetch(`/api/resume-data?userId=${userId}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });

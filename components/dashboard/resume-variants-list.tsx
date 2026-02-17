@@ -1,11 +1,10 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import { BrandButton } from '../ui/buttons';
+import { BrandButton, HoverBorderGradientDemo, HoverFillButton } from '../ui/buttons';
 import { EyeIcon } from '../ui/icons/eye-off-icon';
 import { Resume } from '@/redux';
-import { Plus } from 'lucide-react';
-import { FileUpload } from '../ui/file-upload';
 import { UploadNewDocument } from './resume-data';
+import ResumeUpload from './resumes/resume-upload';
 
 
 const ResumeDataVariantsList = ({ data, currentUserId }: { data: Resume[], currentUserId: string }) => {
@@ -41,8 +40,6 @@ const ResumeDataVariantsList = ({ data, currentUserId }: { data: Resume[], curre
 			},
 		},
 		hover: {
-			y: -8,
-			scale: 1.02,
 			transition: {
 				type: 'spring' as const,
 				stiffness: 400,
@@ -124,7 +121,7 @@ const ResumeDataVariantsList = ({ data, currentUserId }: { data: Resume[], curre
 						onHoverEnd={() => setHoveredId(null)}
 					>
 						{/* Card Container */}
-						<div className="flex flex-col rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-shadow duration-300 h-full">
+						<div className="flex flex-col rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-shadow duration-300 py-8">
 
 							{/* Icon Container */}
 							<motion.div
@@ -221,7 +218,6 @@ const ResumeDataVariantsList = ({ data, currentUserId }: { data: Resume[], curre
 								{/* Buttons */}
 								<motion.div className='py-2 w-full flex flex-col gap-2 items-center justify-center px-4'>
 									<BrandButton text='View Document' className="w-full mx-4 flex items-center justify-center" Icon={EyeIcon} handleClick={() => { }} />
-									{/* <BrandButton text='Apply' className="w-full mx-2 flex items-center justify-center" Icon={EyeIcon} handleClick={() => { }} /> */}
 								</motion.div>
 							</div>
 						</div>
@@ -229,7 +225,7 @@ const ResumeDataVariantsList = ({ data, currentUserId }: { data: Resume[], curre
 				);
 			})}
 
-			<UploadNewDocument currentUserId={currentUserId} />
+			<ResumeUpload currentUserId={currentUserId} />
 		</motion.div>
 	);
 };

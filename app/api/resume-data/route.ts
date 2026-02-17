@@ -5,20 +5,22 @@ import { connect } from '@/config/mongose';
 import Resume from '@/models/resumes';
 import User from '@/models/users';
 import { getServerAccount } from '@/config/appwrite-server';
+import { Account, Client } from 'node-appwrite';
 
 export async function GET(req: Request) {
   try {
+    await connect();
+
     const authHeader = req.headers.get('authorization');
     if (!authHeader) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const jwt = authHeader.replace('Bearer ', '');
+    const token = authHeader.replace('Bearer ', '');
 
-    const account = getServerAccount(jwt);
+    const account = getServerAccount(token);
+
     const appwriteUser = await account.get();
-
-    await connect();
 
     const user = await User.findOne({
       appwriteUserId: appwriteUser.$id,

@@ -112,11 +112,8 @@ export const UploadNewDocument = ({ currentUserId }: { currentUserId: string }) 
 const ResumeData = () => {
 	const dispatch = useAppDispatch();
 	const { resumes, loading } = useAppSelector(selectResumesData);
-
 	const currentUserId = useAppSelector(selectCurrentUserId);
-	// console.log('Current User ID in ResumeData component:', currentUserId);
-	console.log('Resumes data from Redux:', currentUserId);
-	console.log("resumes", resumes, loading)
+
 	useEffect(() => {
 		if (currentUserId && !resumes.length) {
 			console.log('Fetching resumes for user:');
