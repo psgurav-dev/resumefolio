@@ -7,6 +7,8 @@ import { User } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import GearIcon from "./ui/icons/gear-icon";
 import LogoutIcon from "./ui/icons/logout-icon";
+import { logoutUser } from "@/lib/logout";
+import { useAppDispatch } from "@/redux";
 
 const ProfileMenu = ({ user, handleLogout }: { user: any; handleLogout: any }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -89,6 +91,7 @@ const CustomNavbar = ({ navItems }: { navItems: any[] }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		const checkAuth = async () => {
@@ -109,7 +112,7 @@ const CustomNavbar = ({ navItems }: { navItems: any[] }) => {
 
 
 	const handleLogout = async () => {
-		await account.deleteSession('current');
+		logoutUser(dispatch)
 		setIsLoggedIn(false);
 		setUser(null);
 	}

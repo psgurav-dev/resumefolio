@@ -7,7 +7,7 @@ import { fileToBase64 } from "@/lib/utils";
 import { ResumePreview } from "./resume-preview";
 import { PortfolioData } from "@/types/portfolio";
 import { testData } from "@/data/test/resume";
-import ResumeDataVariantsList from "./resume-variants-list";
+
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -18,6 +18,7 @@ import {
 	useCurrentUser,
 } from "@/redux";
 import { selectPreviewData, selectResumesData, selectCurrentUserId } from "@/redux/selectors";
+import ResumeDataVariantsList from "./resumes/resume-variants-list";
 
 export const UploadNewDocument = ({ currentUserId }: { currentUserId: string }) => {
 	const [files, setFiles] = useState<File[]>([])
@@ -113,7 +114,7 @@ const ResumeData = () => {
 	const dispatch = useAppDispatch();
 	const { resumes, loading } = useAppSelector(selectResumesData);
 	const currentUserId = useAppSelector(selectCurrentUserId);
-
+	console.log("resumes", resumes)
 	useEffect(() => {
 		if (currentUserId && !resumes.length) {
 			console.log('Fetching resumes for user:');
@@ -124,7 +125,7 @@ const ResumeData = () => {
 	if (loading) return <div>Loading...</div>
 	return (
 		<div className="w-full h-screen overflow-y-auto">
-			<ResumeDataVariantsList data={resumes} currentUserId={currentUserId} />
+			<ResumeDataVariantsList data={resumes} />
 		</div>
 	)
 }

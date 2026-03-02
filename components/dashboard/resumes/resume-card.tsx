@@ -17,7 +17,7 @@ const ResumeCard = ({ idx, itemId, item, hoveredId, setHoveredId }: { idx: numbe
 			onHoverEnd={() => setHoveredId(null)}
 		>
 			{/* Card Container */}
-			<div className="flex flex-col items-start rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-shadow duration-300 ">
+			<div className="flex flex-col items-start rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-shadow duration-300 py-8">
 
 				{/* Icon Container */}
 				<motion.div
@@ -53,7 +53,7 @@ const ResumeCard = ({ idx, itemId, item, hoveredId, setHoveredId }: { idx: numbe
 				<div className="w-full px-4 py-4 bg-white">
 					{/* Title */}
 					<motion.h3
-						className="font-poppins text-base font-semibold text-gray-900 truncate mb-1"
+						className="font-poppins text-base font-medium text-gray-900 truncate mb-1"
 						initial={{ opacity: 0.8 }}
 						animate={hoveredId === itemId ? {
 							opacity: 1,
@@ -112,9 +112,10 @@ const ResumeCard = ({ idx, itemId, item, hoveredId, setHoveredId }: { idx: numbe
 					#{idx + 1}
 				</motion.div>
 
+
 				{/* Buttons */}
-				<motion.div className='py-2 w-full flex items-center justify-center'>
-					<BrandButton text='View Document' Icon={EyeIcon} handleClick={() => { }} />
+				<motion.div className='py-2 w-full flex flex-col gap-2 items-center justify-center px-4'>
+					<BrandButton text='View Document' className="w-full mx-4 flex items-center justify-center" Icon={EyeIcon} handleClick={() => { }} />
 				</motion.div>
 			</div>
 		</motion.div>

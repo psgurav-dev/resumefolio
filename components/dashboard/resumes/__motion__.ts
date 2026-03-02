@@ -29,8 +29,6 @@ const cardVariants: Variants = {
     },
   },
   hover: {
-    y: -8,
-    scale: 1.02,
     transition: {
       type: 'spring' as const,
       stiffness: 400,

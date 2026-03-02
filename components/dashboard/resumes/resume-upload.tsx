@@ -2,7 +2,7 @@ import { BrandButton } from "@/components/ui/buttons";
 import BrandAiStudioIcon from "@/components/ui/icons/brand-aistudio-icon";
 import { extractResumeJSON } from "@/lib/gemini";
 import { fileToBase64 } from "@/lib/utils";
-import { createResume, Resume, selectPreviewData, setCurrentResume, useAppDispatch, useAppSelector } from "@/redux";
+import { createResume, Resume, selectCurrentUserId, selectPreviewData, setCurrentResume, useAppDispatch, useAppSelector } from "@/redux";
 import { motion } from "motion/react";
 import { useState, useRef, useCallback, useTransition } from "react";
 import { ResumePreview } from "../resume-preview";
@@ -19,7 +19,7 @@ const ACCEPTED_TYPES = ["application/pdf", "application/msword",
 
 const ACCEPTED_EXT = ".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp";
 
-const ResumeUpload = ({ currentUserId }: { currentUserId: string }) => {
+const ResumeUpload = () => {
 	const [hover, setHover] = useState(false);
 	const [dragOver, setDragOver] = useState(false);
 	const [uploaded, setUploaded] = useState<UploadedFile | null>(null);
@@ -30,7 +30,7 @@ const ResumeUpload = ({ currentUserId }: { currentUserId: string }) => {
 	const [isProcessing, setIsProcessing] = useState(false)
 	const [previewData, setPreviewData] = useState<PortfolioData | null>(null);
 
-
+	const currentUserId = useAppSelector(selectCurrentUserId)
 	const dispatch = useAppDispatch();
 
 	const handleFile = useCallback((file: File) => {

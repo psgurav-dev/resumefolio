@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { account } from '@/config/appwrite';
-import { getJWTCookie } from '@/lib/cookies';
 import type { Resume } from './slices/resumesSlice';
 import type { User } from './slices/usersSlice';
 

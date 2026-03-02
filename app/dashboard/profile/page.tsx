@@ -1,26 +1,21 @@
 'use client';
-import ProfileCard from "@/components/dashboard/profile/profile-header";
-import { selectCurrentUserId, useAppSelector } from "@/redux";
-import { selectJWT } from "@/redux/selectors";
+import ProfileDetails from "@/components/dashboard/profile/profile-details";
+import { account } from "@/config/appwrite";
 import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
 	const [user, setUser] = useState<any | null>(null)
 	const [loading, setLoading] = useState(false);
 
-	const currenUserId = useAppSelector(selectCurrentUserId)
-	const jwtToken = useAppSelector(selectJWT)
-
-	console.log("current user", currenUserId)
-
 	useEffect(() => {
 		async function getUsersDetails() {
+			const jwt = await account.createJWT();
 			try {
 				const response = await fetch(`/api/users`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						"authorization": jwtToken ?? ""
+						"authorization": jwt.jwt ?? ""
 					},
 				});
 				if (response.ok) {
@@ -40,11 +35,12 @@ const ProfilePage = () => {
 			}
 		}
 		getUsersDetails();
-	}, [user])
+		return () => { }
+	}, [])
 
 	return (
 		<div>
-			{loading ? <>loading...</> : <ProfileCard user={{}} />}
+			{/* {loading ? <>loading...</> : <ProfileDetails user={user} />} */}
 		</div>
 	)
 }

@@ -9,10 +9,3 @@ export function getServerAccount(jwt: string) {
 
   return new Account(client);
 }
-
-const client = new Client()
-  .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!)
-  .setKey(process.env.APPWRITE_API_KEY!); // 🔑 THIS IS THE FIX
-
-export const account = new Account(client);

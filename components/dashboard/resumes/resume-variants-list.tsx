@@ -4,7 +4,7 @@ import { Resume } from '@/redux';
 
 import ResumeCard from './resume-card';
 import { containerVariants } from './__motion__';
-
+import ResumeUpload from './resume-upload';
 
 
 const ResumeDataVariantsList = ({ data }: { data: Resume[] }) => {
@@ -22,6 +22,7 @@ const ResumeDataVariantsList = ({ data }: { data: Resume[] }) => {
 					<ResumeCard key={idx} idx={idx} itemId={itemId} item={item} hoveredId={hoveredId} setHoveredId={setHoveredId} />
 				);
 			})}
+			<ResumeUpload />
 		</motion.div>
 	);
 };

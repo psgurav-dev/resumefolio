@@ -22,6 +22,7 @@ export const ResumePreview = ({ data, onSave, isSaving, onCancel }: ResumePrevie
     setShowSaveForm(false);
   };
 
+
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 ">
       {/* Header Section */}

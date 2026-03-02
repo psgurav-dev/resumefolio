@@ -14,6 +14,7 @@ export interface User {
 export interface UsersState {
   currentUser: User | null;
   users: User[];
+  profile: User | null;
   jwt: string | null;
   loading: boolean;
   error: string | null;
@@ -22,6 +23,7 @@ export interface UsersState {
 const initialState: UsersState = {
   currentUser: null,
   users: [],
+  profile: null,
   jwt: null,
   loading: false,
   error: null,

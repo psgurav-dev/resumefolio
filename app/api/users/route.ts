@@ -24,8 +24,10 @@ export async function GET(req: NextRequest) {
     if (!user) {
       return NextResponse.json({ user: null });
     }
-    return NextResponse.json({ user });
-  } catch (error) {}
+    return NextResponse.json({ success: true, user });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function PUT(req: NextRequest) {
