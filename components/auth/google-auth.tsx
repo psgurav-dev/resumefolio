@@ -8,14 +8,18 @@ import { useRef } from "react";
 export default function GoogleLogin() {
 	const googleLoginButtonRef = useRef<any>(null);
 
-	const loginWithGoogle = () => {
-		account.createOAuth2Session(
-			OAuthProvider.Google,
-			`${process.env.NEXT_PUBLIC_HOST_URL}/auth/callback`,
-			`${process.env.NEXT_PUBLIC_HOST_URL}/auth/callback`
-		);
+	const loginWithGoogle = async () => {
+		try {
+			await account.deleteSessions();
+		} catch (err) {
+		}
+		account.createOAuth2Session({
+			provider: OAuthProvider.Google,
+			success: `${process.env.NEXT_PUBLIC_HOST_URL}/auth/callback`,
+			failure: `${process.env.NEXT_PUBLIC_HOST_URL}/auth/callback`,
+		});
 	};
-	
+
 	return (
 		<button
 			onMouseEnter={() => googleLoginButtonRef.current?.startAnimation?.()}

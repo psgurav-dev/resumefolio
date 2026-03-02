@@ -18,8 +18,10 @@ export default function AuthCallbackPage() {
 
     async function handleAuth() {
       try {
-        // ✅ create JWT from Appwrite session
         const jwtResponse = await account.createJWT();
+        const sessions = await account.listSessions();
+        console.log("testUser", sessions)
+
         const jwtToken = jwtResponse.jwt;
 
         const res = await fetch("/api/auth/appwrite", {
@@ -33,7 +35,7 @@ export default function AuthCallbackPage() {
         if (!res.ok) throw new Error("User sync failed");
 
         const { user } = await res.json();
-
+        console.log("user details :", user)
         const userData = {
           _id: user._id,
           appwriteUserId: user.appwriteUserId,
