@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
 	const [user, setUser] = useState<any | null>(null)
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		async function getUsersDetails() {
@@ -38,9 +38,13 @@ const ProfilePage = () => {
 		return () => { }
 	}, [])
 
+	if (loading && !user) {
+		return <div>Loading....</div>
+	}
+
 	return (
-		<div>
-			{/* {loading ? <>loading...</> : <ProfileDetails user={user} />} */}
+		<div className="container mx-auto p-8 h-screen overflow-y-auto hide-scrollbar">
+			<ProfileDetails user={user} />
 		</div>
 	)
 }

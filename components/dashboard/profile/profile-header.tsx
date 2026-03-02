@@ -31,7 +31,7 @@ const ProfileCard = ({ user }: { user: any }) => {
 			</div>
 
 			{/* avatar + name row */}
-			<div className="relative flex flex-col items-start gap-4 px-7 pb-7 pt-0 sm:flex-row sm:items-end">
+			<div className="relative flex flex-col items-start gap-4 px-7 pb-7 pt-8 sm:flex-row sm:items-end">
 				{/* avatar */}
 				<motion.div
 					initial={{ scale: 0.6, opacity: 0 }}
@@ -53,7 +53,7 @@ const ProfileCard = ({ user }: { user: any }) => {
 				</motion.div>
 
 				{/* name / username */}
-				<div className="flex-1 pt-3 sm:pt-0">
+				<div className="flex-1 pt-2 sm:pt-0">
 					<motion.h1
 						initial={{ opacity: 0, x: -10 }}
 						animate={{ opacity: 1, x: 0 }}

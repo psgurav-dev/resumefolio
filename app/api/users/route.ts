@@ -35,29 +35,96 @@ export async function PUT(req: NextRequest) {
     await connect();
 
     const body = await req.json();
-    const { selectedResume, userId } = body;
+    const { selectedResume, userId, name, email, username } = body;
 
-    if (!selectedResume) {
+    // Get user ID from auth header if userId not provided
+    let userIdToUpdate = userId;
+    if (!userIdToUpdate) {
+      const authHeader = req.headers.get('authorization');
+      if (!authHeader) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+      const token = authHeader.replace('Bearer ', '');
+      const account = getServerAccount(token);
+      const appwriteUser = await account.get();
+      userIdToUpdate = appwriteUser.$id;
+    }
+
+    // Build update object with only provided fields
+    const updateData: any = {};
+
+    if (selectedResume) {
+      updateData.selectedResume = selectedResume;
+    }
+
+    // Profile edit fields
+    if (name !== undefined) {
+      if (!name || name.trim().length < 2) {
+        return NextResponse.json(
+          { error: 'Name must be at least 2 characters' },
+          { status: 400 },
+        );
+      }
+      updateData.name = name.trim();
+    }
+
+    if (email !== undefined) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRegex.test(email)) {
+        return NextResponse.json(
+          { error: 'Invalid email address' },
+          { status: 400 },
+        );
+      }
+      updateData.email = email.trim();
+    }
+
+    if (username !== undefined && username !== null) {
+      if (username && username.length < 3) {
+        return NextResponse.json(
+          { error: 'Username must be at least 3 characters' },
+          { status: 400 },
+        );
+      }
+      if (username && !/^[a-zA-Z0-9_-]+$/.test(username)) {
+        return NextResponse.json(
+          {
+            error:
+              'Username can only contain letters, numbers, hyphens, and underscores',
+          },
+          { status: 400 },
+        );
+      }
+      updateData.username = username.trim() || undefined;
+    }
+
+    // At least one field should be provided
+    if (Object.keys(updateData).length === 0) {
       return NextResponse.json(
-        { error: 'selectedResume is required' },
+        { error: 'No fields to update' },
         { status: 400 },
       );
     }
 
+    // Update user
     const user = await User.findOneAndUpdate(
-      { appwriteUserId: userId },
-      { selectedResume },
-      { new: true },
+      { appwriteUserId: userIdToUpdate },
+      { ...updateData, updatedAt: new Date() },
+      { new: true, runValidators: true },
     );
-    console.log('Updated user:', user);
+
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
+
     return NextResponse.json({ success: true, user });
   } catch (error) {
     console.error('Update user error:', error);
     return NextResponse.json(
-      { error: 'Failed to update user' },
+      {
+        error: 'Failed to update user',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
       { status: 500 },
     );
   }

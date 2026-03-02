@@ -5,9 +5,11 @@ export interface User {
   appwriteUserId: string;
   email: string;
   name?: string;
+  username?: string;
   provider: 'google' | 'github' | 'email';
   createdAt?: string;
   updatedAt?: string;
+  selectedResume?: string;
   jwt?: string;
 }
 
