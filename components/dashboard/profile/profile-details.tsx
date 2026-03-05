@@ -7,6 +7,9 @@ import EditProfileModal from "./edit-profile-modal";
 import { useEditProfile } from "@/hooks/use-edit-profile";
 import { Mail, Calendar, RefreshCcw, User, LogOut, Pencil, Shield, Zap, Settings } from "lucide-react";
 import { User as UserType } from "@/redux/slices/usersSlice";
+import { logoutUser } from "@/lib/logout";
+import { useAppDispatch } from "@/redux";
+import { redirect } from 'next/navigation'
 
 //  "user": {
 //         "_id": "698483f7992e6af961b03b00",
@@ -141,6 +144,8 @@ const ActionButton = ({ icon, label, onClick, delay, variant = "default" }: Acti
 const ProfileDetails = ({ user }: { user: UserType }) => {
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 	const { updateProfile, isLoading: isUpdateLoading } = useEditProfile();
+	const dispatch = useAppDispatch();
+
 
 	const joinedDate = user.createdAt ? new Date(user.createdAt).toLocaleDateString("en-US", {
 		year: "numeric",
@@ -178,6 +183,11 @@ const ProfileDetails = ({ user }: { user: UserType }) => {
 		},
 		[updateProfile]
 	);
+
+	const handleLogOut = () => {
+		logoutUser(dispatch)
+		redirect('/')
+	}
 
 	return (
 		<motion.div
@@ -384,7 +394,7 @@ const ProfileDetails = ({ user }: { user: UserType }) => {
 							onClick={handleEditClick}
 							delay={0}
 						/>
-						<ActionButton
+						{/* <ActionButton
 							icon={<Settings size={16} />}
 							label="Preferences"
 							delay={0.1}
@@ -393,8 +403,9 @@ const ProfileDetails = ({ user }: { user: UserType }) => {
 							icon={<RefreshCcw size={16} />}
 							label="Refresh Data"
 							delay={0.2}
-						/>
+						/> */}
 						<ActionButton
+							onClick={handleLogOut}
 							icon={<LogOut size={16} />}
 							label="Logout"
 							variant="danger"

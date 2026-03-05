@@ -173,7 +173,7 @@ function StatBadge({ label, value, accent }: StatBadgeProps) {
 const SNAPSHOT_NATURAL_WIDTH = 1400;
 
 function TemplatePreview({ template, hovered }: { template: TemplateProps; hovered: boolean }) {
-	const { accent, tag, preview } = template;
+	const { accent, tag, preview, Component } = template;
 
 	// We want the preview box to be ~16:10 aspect ratio.
 	// The card column min is 300px. At 300px card width with 22px padding each side,
@@ -218,7 +218,7 @@ function TemplatePreview({ template, hovered }: { template: TemplateProps; hover
 				transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
 				style={{ transformOrigin: "top center" }}
 			>
-				{preview === "modern" ? (
+				{Component ? (
 					<div
 						style={{
 							transformOrigin: "top left",
@@ -230,7 +230,7 @@ function TemplatePreview({ template, hovered }: { template: TemplateProps; hover
 							left: 0,
 						}}
 					>
-						<ModernTheme data={MOCK_PORTFOLIO} />
+						<Component data={MOCK_PORTFOLIO} />
 					</div>
 				) : (
 					<div className="absolute inset-0">

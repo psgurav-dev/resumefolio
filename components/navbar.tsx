@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "motion/react";
 import GearIcon from "./ui/icons/gear-icon";
 import LogoutIcon from "./ui/icons/logout-icon";
 import { logoutUser } from "@/lib/logout";
-import { useAppDispatch } from "@/redux";
+import { selectIsAuthenticated, useAppDispatch, useCurrentUser, useIsAuthenticated } from "@/redux";
 
 const ProfileMenu = ({ user, handleLogout }: { user: any; handleLogout: any }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -88,23 +88,24 @@ const ProfileMenu = ({ user, handleLogout }: { user: any; handleLogout: any }) =
 
 const CustomNavbar = ({ navItems }: { navItems: any[] }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [user, setUser] = useState<any>(null);
-	const [loading, setLoading] = useState(true);
+	// const [isLoggedIn, setIsLoggedIn] = useState(false);
+	// const [user, setUser] = useState<any>(null);
+	const [loading, setLoading] = useState(false);
 	const dispatch = useAppDispatch();
-
+	const user = useCurrentUser();
+	const isLoggedIn = useIsAuthenticated();
 	useEffect(() => {
 		const checkAuth = async () => {
-			try {
-				const session = await account.get();
-				setUser(session);
-				setIsLoggedIn(true);
-			} catch (error) {
-				setIsLoggedIn(false);
-				setUser(null);
-			} finally {
-				setLoading(false);
-			}
+			// try {
+			// 	const session = await account.get();
+			// 	setUser(session);
+			// 	setIsLoggedIn(true);
+			// } catch (error) {
+			// 	setIsLoggedIn(false);
+			// 	setUser(null);
+			// } finally {
+			// 	setLoading(false);
+			// }
 		};
 
 		checkAuth();
@@ -113,8 +114,8 @@ const CustomNavbar = ({ navItems }: { navItems: any[] }) => {
 
 	const handleLogout = async () => {
 		logoutUser(dispatch)
-		setIsLoggedIn(false);
-		setUser(null);
+		// setIsLoggedIn(false);
+		// setUser(null);
 	}
 
 	return (
@@ -124,14 +125,9 @@ const CustomNavbar = ({ navItems }: { navItems: any[] }) => {
 				<NavItems items={navItems} />
 				<div className="flex items-center gap-4 ">
 					{!loading && (
-						isLoggedIn && user ? (
-							<ProfileMenu user={user} handleLogout={handleLogout} />
-						) : (
-							<>
-									<NavbarButton href="/sign-in" variant="dark">Sign In</NavbarButton>
-								<NavbarButton variant="primary">Book a call</NavbarButton>
-							</>
-						)
+						isLoggedIn && user
+							? <ProfileMenu user={user} handleLogout={handleLogout} />
+							: <NavbarButton href="/sign-in" variant="dark">Sign In</NavbarButton>
 					)}
 				</div>
 			</NavBody>
@@ -166,12 +162,7 @@ const CustomNavbar = ({ navItems }: { navItems: any[] }) => {
 										{user.name || user.email}
 									</span>
 									<NavbarButton
-										onClick={async () => {
-											await account.deleteSession('current');
-											setIsLoggedIn(false);
-											setUser(null);
-											setIsMobileMenuOpen(false);
-										}}
+										onClick={handleLogout}
 										variant="primary"
 										className="w-full"
 									>

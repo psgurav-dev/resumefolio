@@ -1,30 +1,33 @@
+import { ReactNode } from 'react';
+
 export interface TemplateCardProps {
-	id: string;
-	name: string;
-	snapshot: string;
+  id: string;
+  name: string;
+  snapshot: string;
 }
 
 export interface TemplateProps {
-	id: number;
-	tag: string;
-	title: string;
-	description: string;
-	author: string;
-	avatar: string;
-	uses: string;
-	accent: string;
-	preview: string;
+  id: number;
+  tag: string;
+  title: string;
+  description: string;
+  author: string;
+  avatar: string;
+  uses: string;
+  accent: string;
+  preview: string;
+  Component: React.FC;
 }
 
 export interface TemplateData {
-	id: string;
-	name: string;
-	description: string;
-	Component: React.FC;
+  id: string;
+  name: string;
+  description: string;
+  Component: React.FC;
 }
 
 export interface StatBadgeProps {
-	label: string;
-	value: string;
-	accent: string;
+  label: string;
+  value: string;
+  accent: string;
 }

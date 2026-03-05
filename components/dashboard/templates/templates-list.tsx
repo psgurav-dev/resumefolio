@@ -37,7 +37,7 @@ export default function TemplateLists() {
 				</motion.div>
 
 				{/* Filters */}
-				<motion.div
+				{/* <motion.div
 					className="flex flex-wrap gap-2 mb-10"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
@@ -51,10 +51,10 @@ export default function TemplateLists() {
 							onClick={() => setFilter(c)}
 						/>
 					))}
-				</motion.div>
+				</motion.div> */}
 				<motion.hr className="w-full h-4  shadow-2xl " />
 
-				<div className="overflow-auto h-125 hide-scrollbar">
+				<div className="overflow-auto h-150 hide-scrollbar">
 					{/* Grid */}
 					<motion.div
 						layout

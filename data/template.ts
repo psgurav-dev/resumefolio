@@ -60,6 +60,7 @@ export const TEMPLATES = [
     uses: '6.1k',
     accent: '#6366F1',
     preview: 'modern',
+    Component: ModernTheme,
   },
   {
     id: 2,
@@ -116,10 +117,4 @@ export const templatesData = [
   },
 ];
 
-export const CATEGORIES = [
-  'All',
-  'Portfolio',
-  'Marketing',
-  'Engineering',
-  'Analytics',
-];
+export const CATEGORIES = ['All', 'Marketing', 'Engineering', 'Analytics'];
