@@ -6,5 +6,9 @@
   {
     "name": "002_add_username_to_users",
     "timestamp": 1770914458632
+  },
+  {
+    "name": "003_add_templateId_to_users",
+    "timestamp": 1772781686258
   }
 ]

@@ -64,3 +64,9 @@ export const selectIsAuthenticated = createSelector(
   [selectCurrentUser],
   (user) => !!user
 );
+
+// Current user's selected template id
+export const selectCurrentUserTemplateId = createSelector(
+  [selectCurrentUser],
+  (user) => (user?.templateId ?? null)
+);

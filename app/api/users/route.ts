@@ -35,7 +35,7 @@ export async function PUT(req: NextRequest) {
     await connect();
 
     const body = await req.json();
-    const { selectedResume, userId, name, email, username } = body;
+    const { selectedResume, userId, name, email, username, templateId } = body;
 
     // Get user ID from auth header if userId not provided
     let userIdToUpdate = userId;
@@ -55,6 +55,10 @@ export async function PUT(req: NextRequest) {
 
     if (selectedResume) {
       updateData.selectedResume = selectedResume;
+    }
+
+    if (templateId) {
+      updateData.templateId = templateId;
     }
 
     // Profile edit fields

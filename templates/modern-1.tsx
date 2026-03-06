@@ -4,12 +4,13 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { PortfolioData } from '@/types/portfolio';
-
+import { MOCK_PORTFOLIO } from "@/data/template";
 interface ThemeProps {
 	data: PortfolioData;
+	isScaledDown?: boolean;
 }
 
-const ModernTheme: React.FC<ThemeProps> = ({ data }) => {
+const ModernTheme: React.FC<ThemeProps> = ({ data = MOCK_PORTFOLIO, isScaledDown = false }: ThemeProps) => {
 	const containerVariants = {
 		hidden: { opacity: 0 },
 		visible: {

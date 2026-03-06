@@ -37,6 +37,11 @@ const UserSchema = new mongoose.Schema(
       ref: 'resumes',
       null: true,
     },
+
+    templateId: {
+      type: Number,
+      null: true,
+    },
   },
   { timestamps: true },
 );

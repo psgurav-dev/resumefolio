@@ -1,9 +1,8 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import { BrandButton, HoverBorderGradientDemo, HoverFillButton } from '../ui/buttons';
+import { BrandButton } from '../ui/buttons';
 import { EyeIcon } from '../ui/icons/eye-off-icon';
 import { Resume } from '@/redux';
-import { UploadNewDocument } from './resume-data';
 import ResumeUpload from './resumes/resume-upload';
 
 

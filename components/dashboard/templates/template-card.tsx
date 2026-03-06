@@ -1,9 +1,14 @@
+"use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cardVariants, textSlideVariants } from "./__motion__/variants";
 import ModernTheme from "@/templates/modern-1";
 import { StatBadgeProps, TemplateProps } from "./__types__";
-import { MOCK_PORTFOLIO } from "@/data/template";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { selectCurrentUser, selectCurrentUserTemplateId } from "@/redux/selectors";
+import { updateUser as updateUserAction } from "@/redux/slices/usersSlice";
+import { updateUser as updateUserThunk } from "@/redux/thunks";
+
 
 
 
@@ -11,9 +16,43 @@ export const TemplateCard = ({ template, index }: { template: TemplateProps; ind
 	const [hovered, setHovered] = useState(false);
 	const [clicked, setClicked] = useState(false);
 
+	const dispatch = useAppDispatch();
+	const currentUser = useAppSelector(selectCurrentUser);
+	const currentTemplateId = useAppSelector(selectCurrentUserTemplateId);
+
 	const { tag, title, description, author, avatar, uses, accent } = template;
 
-	const handleUse = () => {
+	const isSelected = currentTemplateId === template.id;
+
+	const handleUse = async () => {
+		// If no logged-in user, just show feedback
+		if (!currentUser) {
+			setClicked(true);
+			setTimeout(() => setClicked(false), 1600);
+			console.warn('No current user to assign template to');
+			return;
+		}
+
+		// If already selected, show feedback and noop
+		if (currentTemplateId === template.id) {
+			setClicked(true);
+			setTimeout(() => setClicked(false), 1200);
+			return;
+		}
+
+		const updatedUser = { ...currentUser, templateId: template.id };
+
+		// Optimistically update local state
+		dispatch(updateUserAction(updatedUser));
+
+		// Persist to server
+		try {
+			await dispatch(updateUserThunk(updatedUser)).unwrap();
+			console.log(`Template "${title}" persisted for user`);
+		} catch (err) {
+			console.error('Failed to persist templateId', err);
+		}
+
 		setClicked(true);
 		setTimeout(() => setClicked(false), 1600);
 	};
@@ -31,8 +70,6 @@ export const TemplateCard = ({ template, index }: { template: TemplateProps; ind
 			animate="visible"
 			exit="exit"
 			whileHover={{ y: -6, transition: { duration: 0.3, ease: "easeOut" } }}
-			onHoverStart={() => setHovered(true)}
-			onHoverEnd={() => setHovered(false)}
 		>
 			{/* Glow blob */}
 			<motion.div
@@ -106,14 +143,16 @@ export const TemplateCard = ({ template, index }: { template: TemplateProps; ind
 						type="button"
 						className="font-mono text-[11px] tracking-wide px-[14px] py-[7px] rounded-[9px] min-w-[118px] text-center whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2"
 						style={{
-							color: clicked ? "#fff" : accent,
+							color: isSelected ? '#090c10' : clicked ? '#fff' : accent,
 							border: `1px solid color-mix(in srgb, ${accent} 40%, transparent)`,
 							outlineColor: accent,
+							backgroundColor: isSelected ? accent : clicked ? accent : 'transparent',
 						}}
-						onClick={handleUse}
-						whileTap={{ scale: 0.93 }}
-						animate={{ backgroundColor: clicked ? accent : "transparent" }}
+						onClick={isSelected ? undefined : handleUse}
+						whileTap={{ scale: isSelected ? 1 : 0.93 }}
 						transition={{ duration: 0.25 }}
+						aria-pressed={isSelected}
+						disabled={isSelected}
 					>
 						<AnimatePresence mode="wait">
 							{clicked ? (
@@ -136,7 +175,7 @@ export const TemplateCard = ({ template, index }: { template: TemplateProps; ind
 									exit="exit"
 									className="block"
 								>
-									Use Template →
+										{isSelected ? 'Selected' : 'Use Template →'}
 								</motion.span>
 							)}
 						</AnimatePresence>
@@ -230,7 +269,7 @@ function TemplatePreview({ template, hovered }: { template: TemplateProps; hover
 							left: 0,
 						}}
 					>
-						<Component data={MOCK_PORTFOLIO} />
+						<Component isScaledDown={true} />
 					</div>
 				) : (
 					<div className="absolute inset-0">

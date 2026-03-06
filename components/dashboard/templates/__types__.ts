@@ -16,14 +16,14 @@ export interface TemplateProps {
   uses: string;
   accent: string;
   preview: string;
-  Component: React.FC;
+  Component: React.ComponentType<any>;
 }
 
 export interface TemplateData {
   id: string;
   name: string;
   description: string;
-  Component: React.FC;
+  Component: React.ComponentType<any>;
 }
 
 export interface StatBadgeProps {

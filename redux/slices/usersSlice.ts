@@ -6,6 +6,8 @@ export interface User {
   email: string;
   name?: string;
   username?: string;
+  // selected template index/id
+  templateId?: number | null;
   provider: 'google' | 'github' | 'email';
   createdAt?: string;
   updatedAt?: string;

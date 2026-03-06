@@ -1,17 +1,11 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { CATEGORIES, TEMPLATES } from "@/data/template";
+import { TEMPLATES } from "@/data/template";
 import { headerVariants } from "./__motion__/variants";
 import { TemplateCard } from "./template-card";
 
 export default function TemplateLists() {
-	const [filter, setFilter] = useState("All");
-
-	const visibleTemplates =
-		filter === "All"
-			? TEMPLATES
-			: TEMPLATES.filter((t) => t.tag === filter);
 
 	return (
 		<div className="bg-[#0B0B0F] text-[#EDEDE9] font-sans h-full">
@@ -36,22 +30,6 @@ export default function TemplateLists() {
 					</p>
 				</motion.div>
 
-				{/* Filters */}
-				{/* <motion.div
-					className="flex flex-wrap gap-2 mb-10"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ delay: 0.2, duration: 0.4 }}
-				>
-					{CATEGORIES.map((c) => (
-						<FilterPill
-							key={c}
-							label={c}
-							active={filter === c}
-							onClick={() => setFilter(c)}
-						/>
-					))}
-				</motion.div> */}
 				<motion.hr className="w-full h-4  shadow-2xl " />
 
 				<div className="overflow-auto h-150 hide-scrollbar">
@@ -61,7 +39,7 @@ export default function TemplateLists() {
 						className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-5"
 					>
 						<AnimatePresence mode="popLayout">
-							{visibleTemplates.map((template, i) => (
+							{TEMPLATES.map((template, i) => (
 								<TemplateCard
 									key={template.id}
 									template={template}

@@ -158,7 +158,7 @@ export const updateUser = createAsyncThunk(
   async (user: User, { rejectWithValue, getState }) => {
     try {
       const token = await getAuthToken(getState);
-      const response = await fetch(`/api/users/${user._id}`, {
+      const response = await fetch(`/api/users/`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,

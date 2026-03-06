@@ -1,4 +1,6 @@
 import ModernTheme from '@/templates/modern-1';
+import CreativeTheme from '@/templates/nexus.template';
+import NexusTheme from '@/templates/nexus2';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Mock portfolio data for the ModernTheme snapshot preview
@@ -73,6 +75,7 @@ export const TEMPLATES = [
     uses: '4.2k',
     accent: '#FF6B35',
     preview: 'abstract',
+    Component: CreativeTheme,
   },
   {
     id: 3,
@@ -85,22 +88,21 @@ export const TEMPLATES = [
     uses: '9.8k',
     accent: '#00D9C0',
     preview: 'abstract',
+    Component: NexusTheme,
   },
-  {
-    id: 4,
-    tag: 'Analytics',
-    title: 'KPI Dashboard',
-    description:
-      'Pre-wired charts, metric cards, and filter logic. Connect your data source and go live in minutes.',
-    author: 'Sam Torres',
-    avatar: 'ST',
-    uses: '3.5k',
-    accent: '#F7D35E',
-    preview: 'abstract',
-  },
+  // {
+  //   id: 4,
+  //   tag: 'Analytics',
+  //   title: 'KPI Dashboard',
+  //   description:
+  //     'Pre-wired charts, metric cards, and filter logic. Connect your data source and go live in minutes.',
+  //   author: 'Sam Torres',
+  //   avatar: 'ST',
+  //   uses: '3.5k',
+  //   accent: '#F7D35E',
+  //   preview: 'abstract',
+  // },
 ];
-
-
 
 export const templatesData = [
   {
